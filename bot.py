@@ -4,11 +4,19 @@
 
 import requests
 from datetime import date
+import smtplib
+from email.mime.text import MIMEText
+import os
+
+def send_email(summary_text):
+    sender = os.environ.get("EMAIL_SENDER")
+    password = os.environ.get("EMAIL_PASSWORD") # Gmail App Password
+    receiver = os.environ.get("EMAIL_RECEIVER")
+
 
 def get_weather(city="Thiruvananthapuram"):
     """Fetch today's weather as a one-line text summary."""
-    import os
-
+   
      # This pulls the hidden secret directly from GitHub's secure server environment
     api_key = os.environ.get("WEATHER_API_KEY")
 
@@ -66,6 +74,21 @@ TODAY'S FACT
 {fact}
 """
     return summary
+def send_email(summary_text):
+    sender = os.environ.get("EMAIL_SENDER")
+    password = os.environ.get("EMAIL_PASSWORD")  # Gmail App Password
+    receiver = os.environ.get("EMAIL_RECEIVER")
+    
+    msg = MIMEText(summary_text)
+    msg["Subject"] = "Pulse - Daily Summary"
+    msg["From"] = sender
+    msg["To"] = receiver
+
+    
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(sender, password)
+        server.send_message(msg)
+    print("Email sent.")
 
 def run():
     """Main entry point, called by GitHub Actions."""
