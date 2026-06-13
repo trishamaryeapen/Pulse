@@ -1,16 +1,14 @@
-# The workflow name - appears in the Actions tab
 name: Pulse - Daily Summary Bot
 
 on:
-  # Scheduled run at 2:30 AM UTC -> 8:00 AM IST
   schedule:
     - cron: '30 2 * * *'
-
-  # Manual trigger adds a "Run workflow" button for testing
   workflow_dispatch:
+
 jobs:
-  run_pulse:                  # Job name (your choice)
-    runs-on: ubuntu-latest    # GitHub's free Linux server
+  run_pulse:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
