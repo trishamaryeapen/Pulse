@@ -58,6 +58,7 @@ def build_summary():
     today = date.today().strftime("%A, %d %b %Y")
     weather = get_weather()
     quote = get_quote()
+    fact = get_fact()
     
     summary = f"""
 PULSE - Daily Summary
