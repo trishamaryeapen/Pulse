@@ -4,27 +4,32 @@
 
 import requests
 from datetime import date
+
 def get_weather(city="Thiruvananthapuram"):
     """Fetch today's weather as a one-line text summary."""
+    # Ensure this URL matches exactly
     url = f"https://wttr.in{city}?format=3"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
-        return response.text.strip()  # remove trailing newline
+        return response.text.strip()
     except Exception as e:
         return "Weather unavailable :("
+
 def get_quote():
     """Fetch a random motivational quote from ZenQuotes."""
+    # Ensure this URL matches exactly
     url = "https://zenquotes.io"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
-        data = response.json()         # JSON -> Python list
-        quote = data[0]['q']
+        data = response.json()
+        quote = data[0]['q']  # Note: zenquotes returns a list, so we need data[0]
         author = data[0]['a']
         return f'"{quote}" - {author}'
     except Exception as e:
         return "Quote unavailable :("
+
 def build_summary():
     """Assemble the full daily summary from all data sources."""
     today = date.today().strftime("%A, %d %b %Y")
@@ -43,19 +48,15 @@ TODAY'S QUOTE
 {quote}
 """
     return summary
+
 def run():
     """Main entry point, called by GitHub Actions."""
     summary = build_summary()
-    print(summary)  # shows in the Actions log
+    print(summary)
     
-    # Save to a file (uploaded as a downloadable artifact)
     with open("daily_summary.txt", "w", encoding="utf-8") as f:
         f.write(summary)
-        print("Pulse ran successfully!")
+    print("Pulse ran successfully!")
 
 if __name__ == "__main__":
     run()
-
-
-
-
