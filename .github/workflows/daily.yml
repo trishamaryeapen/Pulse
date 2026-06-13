@@ -25,6 +25,7 @@ jobs:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
         run: python bot.py
 
       - name: Upload summary as artifact
@@ -32,8 +33,3 @@ jobs:
         with:
           name: daily-summary
           path: daily_summary.txt
-      - name: Run Pulse Bot
-        env:
-          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
-        run: python bot.py
-
