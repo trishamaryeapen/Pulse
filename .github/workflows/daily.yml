@@ -31,4 +31,3 @@ jobs:
         with:
           name: daily-summary
           path: daily_summary.txt
-
