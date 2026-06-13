@@ -28,3 +28,8 @@ jobs:
         with:
           name: daily-summary
           path: daily_summary.txt
+      - name: Run Pulse Bot
+        env:
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+        run: python bot.py
+
