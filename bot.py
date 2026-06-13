@@ -29,6 +29,17 @@ def get_quote():
         return f'"{quote}" - {author}'
     except Exception as e:
         return "Quote unavailable :("
+def get_fact():
+    """Fetch a random fact from Factretriever"""
+    url = "https://www.factretriever.com/"
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()         # JSON -> Python list
+        fact = data[0]['q']
+        return f"{fact}" 
+    except Exception as e:
+        return "Fact unavailable :("
 
 def build_summary():
     """Assemble the full daily summary from all data sources."""
@@ -46,6 +57,9 @@ WEATHER
 
 TODAY'S QUOTE
 {quote}
+
+TODAY'S FACT
+{fact}
 """
     return summary
 
