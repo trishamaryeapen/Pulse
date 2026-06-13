@@ -95,6 +95,12 @@ def run():
     """Main entry point, called by GitHub Actions."""
     summary = build_summary()
     print(summary)
+    try:
+        send_email(summary)
+        print("Email transmission complete!")
+    except Exception as e:
+        # If your credentials or network fail, this prevents the entire bot from crashing
+        print(f"Email delivery failed with error: {e}")
     
     with open("daily_summary.txt", "w", encoding="utf-8") as f:
         f.write(summary)
